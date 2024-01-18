@@ -2,6 +2,7 @@ package com.crestinfosystems_jinay.wishlistapp.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,6 +11,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxColors
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -51,12 +55,14 @@ fun AddUpdataeDetail(
     val scffoldState = rememberScaffoldState()
     if (id != 0L) {
         val wish =
-            viewModel.getAwishById(id).collectAsState(initial = Wish(0L, title = "", desc = ""))
+            viewModel.getAwishById(id).collectAsState(initial = Wish(0L, title = "", desc = "", isDone = false))
         viewModel.wishTitle = wish.value.title
         viewModel.wishDesc = wish.value.desc
+        viewModel.wishDone = wish.value.isDone
     } else {
         viewModel.wishTitle = ""
         viewModel.wishDesc = ""
+        viewModel.wishDone = false
     }
 
     Scaffold(
@@ -93,6 +99,30 @@ fun AddUpdataeDetail(
                 viewModel.onWishDescChange(changeVal)
             }, "Description")
             Spacer(modifier = Modifier.height(10.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 15.dp)
+                    .then(ComposeUtils.modifyDimensionsBasedOnScreenSize(baseHeight = 30.dp)),
+                verticalAlignment = Alignment.CenterVertically
+
+            ) {
+                Checkbox(
+                    checked = viewModel.wishDone, onCheckedChange = {
+                        viewModel.wishDone = it
+                    }, colors = CheckboxDefaults.colors(
+                        uncheckedColor = ColorUtils.subTextColor,
+                        checkmarkColor = ColorUtils.primaryBackGroundColor,
+                        checkedColor = ColorUtils.textColor
+                    )
+                )
+                Text(
+                    text = "Wish Done",
+                    color = ColorUtils.textColor,
+                    style = TextStyle(fontSize = 18.sp)
+                )
+            }
+            Spacer(modifier = Modifier.height(10.dp))
             Button(
                 onClick = {
                     if (viewModel.wishTitle.isNotEmpty() && viewModel.wishDesc.isNotEmpty()) {
@@ -104,6 +134,7 @@ fun AddUpdataeDetail(
                                     id = id,
                                     title = viewModel.wishTitle.trim(),
                                     desc = viewModel.wishDesc.trim(),
+                                    isDone = viewModel.wishDone
                                 )
                             )
                             snackMessage.value = "Wish has been updated"
@@ -112,7 +143,8 @@ fun AddUpdataeDetail(
                             viewModel.addWish(
                                 Wish(
                                     title = viewModel.wishTitle.trim(),
-                                    desc = viewModel.wishDesc.trim()
+                                    desc = viewModel.wishDesc.trim(),
+                                    isDone = false,
                                 )
                             )
                             snackMessage.value = "Wish has been Created"

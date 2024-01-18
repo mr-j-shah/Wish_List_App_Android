@@ -2,7 +2,9 @@ package com.crestinfosystems_jinay.wishlistapp.screens
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissValue
+import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FractionalThreshold
@@ -63,6 +66,7 @@ fun HomeScreen(navController: NavController, viewModel: WishViewModel) {
     ) {
         Column(modifier = Modifier.padding(it)) {
             val wishListData = viewModel.getAllWishes.collectAsState(initial = listOf())
+            Spacer(modifier = Modifier.height(10.dp))
             LazyColumn() {
                 items(wishListData.value, key = { wish -> wish.id }) { wish ->
                     val dismissState = rememberDismissState(
