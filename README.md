@@ -7,7 +7,7 @@ The Wish List Android Application is a simple and intuitive mobile app built wit
 
 ## Features
 
-- Create Wishes: Easily add new wishes to your list with a few taps, including a title, description, and optional image.
+- Create Wishes: Easily add new wishes to your list with a few taps, including a title and description.
 
 - View and Edit Wishes: Organize your wishes in a visually appealing list. Edit wish details or mark them as completed.
 
@@ -17,10 +17,17 @@ The Wish List Android Application is a simple and intuitive mobile app built wit
 
 - Search and Filter: Quickly find specific wishes using the search functionality or filter them based on various criteria.
 
+- You can change mode of Wish like Done and Un Done and this will reflect in UI part of Application.
+
 
 ## Screenshots
-<img src='https://github.com/mr-j-shah/Wish_List_App_Android/assets/79891868/261fdd72-8157-49cf-83b1-ccca3eed653b' width='200'>
-<img src='https://github.com/mr-j-shah/Wish_List_App_Android/assets/79891868/0bfa969f-0063-46ba-a0e6-467ad48d37a9' width='200'>
+<img src='https://github.com/mr-j-shah/Wish_List_App_Android/assets/79891868/4dc2395e-ff45-435e-a2e1-b022880cb7ff' width='200'>
+<img src='https://github.com/mr-j-shah/Wish_List_App_Android/assets/79891868/accd425b-47bb-47f8-9a44-b2a0739dd016' width='200'>
+<img src='https://github.com/mr-j-shah/Wish_List_App_Android/assets/79891868/20ff98ac-c034-4ead-b796-92f9fbb15a29' width='200'>
+
+
+
+
 
 
 
