@@ -19,8 +19,8 @@ The Wish List Android Application is a simple and intuitive mobile app built wit
 
 
 ## Screenshots
-<img src='https://github.com/mr-j-shah/Wish_List_App_Android/assets/79891868/261fdd72-8157-49cf-83b1-ccca3eed653b' width='25'>
-<img src='https://github.com/mr-j-shah/Wish_List_App_Android/assets/79891868/0bfa969f-0063-46ba-a0e6-467ad48d37a9' width='25'>
+<img src='https://github.com/mr-j-shah/Wish_List_App_Android/assets/79891868/261fdd72-8157-49cf-83b1-ccca3eed653b' width='200'>
+<img src='https://github.com/mr-j-shah/Wish_List_App_Android/assets/79891868/0bfa969f-0063-46ba-a0e6-467ad48d37a9' width='200'>
 
 
 
