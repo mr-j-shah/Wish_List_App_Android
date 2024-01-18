@@ -16,17 +16,4 @@ data class Wish(
     val isDone :Boolean = false
 )
 
-object DummyData {
-    val wishList = listOf<Wish>(
-        Wish(
-            title = "Buy a Apple Watch",
-            desc = "You need to archive this Target by end of Year 2024",
-            id = 0
-        ),
-        Wish(
-            title = "Car",
-            desc = "You need to archive this Target by end of Year 2024",
-            id = 1
-        )
-    )
-}
+
