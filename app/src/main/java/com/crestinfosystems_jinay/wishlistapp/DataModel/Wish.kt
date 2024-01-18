@@ -12,6 +12,8 @@ data class Wish(
     val desc: String = "",
     @ColumnInfo(name = "wishTitle")
     val title: String = "",
+    @ColumnInfo(name = "isComplete")
+    val isDone :Boolean = false
 )
 
 object DummyData {

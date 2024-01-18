@@ -18,6 +18,7 @@ class WishViewModel(
 ) : ViewModel() {
     var wishTitle by mutableStateOf("")
     var wishDesc by mutableStateOf("")
+    var wishDone by mutableStateOf(false)
 
     fun onWishTitleChange(newString :String){
         wishTitle = newString
@@ -48,7 +49,16 @@ class WishViewModel(
             wishRepo.updateWish(wish)
         }
     }
-
+    fun doneWish(wish: Wish){
+        viewModelScope.launch(Dispatchers.IO) {
+            wishRepo.updateWish(wish.copy(isDone = true))
+        }
+    }
+    fun unDoneWish(wish: Wish){
+        viewModelScope.launch(Dispatchers.IO) {
+            wishRepo.updateWish(wish.copy(isDone = false))
+        }
+    }
     fun deleteWish(wish: Wish){
         viewModelScope.launch(Dispatchers.IO) {
             wishRepo.deleteWish(wish)
