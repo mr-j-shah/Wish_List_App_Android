@@ -9,12 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissValue
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FractionalThreshold
@@ -40,8 +38,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -58,7 +54,6 @@ import kotlinx.coroutines.flow.flowOf
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(navController: NavController, viewModel: WishViewModel) {
-    val context = LocalContext.current
     Scaffold(
         topBar = {
             AppBar(title = "Wish List")
@@ -85,6 +80,7 @@ fun HomeScreen(navController: NavController, viewModel: WishViewModel) {
                 list.filter { it.title.contains(query, ignoreCase = true) }
             }.collectAsState(initial = listOf())
             TextField(
+                singleLine = true,
                 value = searchText,
                 onValueChange = { it ->
                     searchText = it

@@ -35,9 +35,9 @@ class WishViewModel(
     }
 
     fun addWish(wish: Wish){
-        viewModelScope.launch(Dispatchers.IO) {
-            wishRepo.addWish(wish)
-        }
+            viewModelScope.launch(Dispatchers.IO) {
+                wishRepo.addWish(wish)
+            }
     }
 
     fun getAwishById(id:Long):Flow<Wish>{

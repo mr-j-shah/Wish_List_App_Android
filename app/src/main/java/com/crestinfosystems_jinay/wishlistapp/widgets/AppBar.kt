@@ -1,11 +1,8 @@
-@file:Suppress("UNUSED_EXPRESSION")
-
 package com.crestinfosystems_jinay.wishlistapp.widgets
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
