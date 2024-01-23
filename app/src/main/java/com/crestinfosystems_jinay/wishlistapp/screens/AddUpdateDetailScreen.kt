@@ -53,7 +53,8 @@ fun AddUpdataeDetail(
     val scffoldState = rememberScaffoldState()
     if (id != 0L) {
         val wish =
-            viewModel.getAwishById(id).collectAsState(initial = Wish(0L, title = "", desc = "", isDone = false))
+            viewModel.getAwishById(id)
+                .collectAsState(initial = Wish(0L, title = "", desc = "", isDone = false))
         viewModel.wishTitle = wish.value.title
         viewModel.wishDesc = wish.value.desc
         viewModel.wishDone = wish.value.isDone
@@ -91,35 +92,38 @@ fun AddUpdataeDetail(
             Spacer(modifier = Modifier.height(10.dp))
             textFields(viewModel.wishTitle, { changeVal ->
                 viewModel.onWishTitleChange(changeVal)
-            }, "Title")
+            }, "Title",enable = !viewModel.wishDone)
             Spacer(modifier = Modifier.height(10.dp))
             textFields(viewModel.wishDesc, { changeVal ->
                 viewModel.onWishDescChange(changeVal)
-            }, "Description")
+            }, "Description",enable = !viewModel.wishDone)
             Spacer(modifier = Modifier.height(10.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp)
-                    .then(ComposeUtils.modifyDimensionsBasedOnScreenSize(baseHeight = 30.dp)),
-                verticalAlignment = Alignment.CenterVertically
+            if (id != 0L) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 15.dp)
+                        .then(ComposeUtils.modifyDimensionsBasedOnScreenSize(baseHeight = 30.dp)),
+                    verticalAlignment = Alignment.CenterVertically
 
-            ) {
-                Checkbox(
-                    checked = viewModel.wishDone, onCheckedChange = {
-                        viewModel.wishDone = it
-                    }, colors = CheckboxDefaults.colors(
-                        uncheckedColor = ColorUtils.subTextColor,
-                        checkmarkColor = ColorUtils.primaryBackGroundColor,
-                        checkedColor = ColorUtils.textColor
+                ) {
+                    Checkbox(
+                        checked = viewModel.wishDone, onCheckedChange = {
+                            viewModel.wishDone = it
+                        }, colors = CheckboxDefaults.colors(
+                            uncheckedColor = ColorUtils.subTextColor,
+                            checkmarkColor = ColorUtils.primaryBackGroundColor,
+                            checkedColor = ColorUtils.textColor
+                        )
                     )
-                )
-                Text(
-                    text = "Wish Done",
-                    color = ColorUtils.textColor,
-                    style = TextStyle(fontSize = 18.sp)
-                )
+                    Text(
+                        text = "Wish Done",
+                        color = ColorUtils.textColor,
+                        style = TextStyle(fontSize = 18.sp)
+                    )
+                }
             }
+
             Spacer(modifier = Modifier.height(10.dp))
             Button(
                 onClick = {
@@ -179,10 +183,11 @@ fun AddUpdataeDetail(
 
 
 @Composable
-fun textFields(value: String, onChange: (String) -> Unit, lable: String) {
+fun textFields(value: String, onChange: (String) -> Unit, lable: String, enable: Boolean) {
     OutlinedTextField(value = value, onValueChange = {
         onChange(it)
     }, label = { Text(text = lable, color = ColorUtils.textColor) },
+        enabled = enable,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 15.dp),

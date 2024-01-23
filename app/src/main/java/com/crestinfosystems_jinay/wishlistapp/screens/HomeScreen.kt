@@ -1,6 +1,7 @@
 package com.crestinfosystems_jinay.wishlistapp.screens
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,10 +14,13 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissValue
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.Text
@@ -38,12 +42,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.crestinfosystems_jinay.wishlistapp.R
 import com.crestinfosystems_jinay.wishlistapp.ScreenRoute
 import com.crestinfosystems_jinay.wishlistapp.utils.ColorUtils
+import com.crestinfosystems_jinay.wishlistapp.utils.ComposeUtils
 import com.crestinfosystems_jinay.wishlistapp.viewModel.WishViewModel
 import com.crestinfosystems_jinay.wishlistapp.widgets.AppBar
 import com.crestinfosystems_jinay.wishlistapp.widgets.wishItem
@@ -54,6 +61,12 @@ import kotlinx.coroutines.flow.flowOf
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(navController: NavController, viewModel: WishViewModel) {
+    var expanded by remember {
+        mutableStateOf(false)
+    }
+    var searchBy by remember {
+        mutableStateOf(SearchBy.Title)
+    }
     Scaffold(
         topBar = {
             AppBar(title = "Wish List")
@@ -77,7 +90,13 @@ fun HomeScreen(navController: NavController, viewModel: WishViewModel) {
                 mutableStateOf("")
             }
             val wishListData = viewModel.getAllWishes.combine(flowOf(searchText)) { list, query ->
-                list.filter { it.title.contains(query, ignoreCase = true) }
+                list.filter {
+                    if (searchBy == SearchBy.Title) {
+                        it.title.contains(query, ignoreCase = true)
+                    } else {
+                        it.desc.contains(query, ignoreCase = true)
+                    }
+                }
             }.collectAsState(initial = listOf())
             TextField(
                 singleLine = true,
@@ -92,7 +111,49 @@ fun HomeScreen(navController: NavController, viewModel: WishViewModel) {
                 textStyle = TextStyle(color = ColorUtils.textColor),
                 placeholder = { Text("Search", color = ColorUtils.textColor) },
                 leadingIcon = {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = null, tint = ColorUtils.textColor)
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = null,
+                        tint = ColorUtils.textColor
+                    )
+                },
+                trailingIcon = {
+                    IconButton(onClick = { expanded = true }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.search_from),
+                            contentDescription = null,
+                            tint = ColorUtils.textColor,
+                            modifier = Modifier
+                                .padding(horizontal = 5.dp)
+                                .then(
+                                    ComposeUtils.modifyDimensionsBasedOnScreenSize(
+                                        baseWidth = 30.dp,
+                                        baseHeight = 30.dp
+                                    )
+                                )
+                        )
+                    }
+                    DropdownMenu(
+                        modifier = Modifier.background(color = ColorUtils.primaryBackGroundColor),
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        DropdownMenuItem(onClick = {
+                            searchBy = SearchBy.Title
+                            searchText = ""
+                            expanded = false
+                        }) {
+                            Text("Search By Title", color = ColorUtils.textColor)
+                        }
+                        DropdownMenuItem(onClick = {
+                            searchBy = SearchBy.Description
+                            searchText = ""
+                            expanded = false
+                        }) {
+                            Text("Search By Description", color = ColorUtils.textColor)
+                        }
+                        // Add more items as needed
+                    }
                 },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
@@ -165,3 +226,6 @@ fun HomeScreen(navController: NavController, viewModel: WishViewModel) {
 
 }
 
+enum class SearchBy {
+    Title, Description
+}
